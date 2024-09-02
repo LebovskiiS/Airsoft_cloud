@@ -26,7 +26,7 @@ class Database:
             return data
         except sqlite3.Error as e:
             self.connection.rollback()
-            return f'error occurred{e}']
+            return f'error occurred{e}'
 
     def fetch_one_id(self, id):
         try:
