@@ -1,7 +1,5 @@
 import sqlite3
-
 import db_scripts
-from db_scripts import create_table
 
 
 class Database:
@@ -22,13 +20,13 @@ class Database:
     def insert_one(self, data: dict):  # player name, nickname, event_name, day, location, link
         try:
             self.cursor.execute('INSERT INTO information (name, nickname, event_name, day, location, link) '
-                                'VALUES (:name, :nickname, :event_name, :day, :location, :link)')
+                                'VALUES (?,?,?,?,?,?)', [data['name'], data['nickname'], data['event_name'], data['day'], data['location'], data['link']])
             self.connection.commit()
             data = self.cursor.lastrowid
             return data
         except sqlite3.Error as e:
             self.connection.rollback()
-            return f'error occurred{e}'
+            return f'error occurred{e}']
 
     def fetch_one_id(self, id):
         try:
