@@ -1,2 +1,2 @@
-class No_data(Exception):
+class NoData(Exception):
     pass

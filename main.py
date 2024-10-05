@@ -1,3 +1,5 @@
-from application import routs
+from application import app
 
-routs.app.run(debug= True)
+
+if __name__ == "__main__":
+    app.run(debug= True)
