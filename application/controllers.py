@@ -24,10 +24,10 @@ def events():
 
 def registration_submit(form):
     name = form['name']
-    username = form['username']
+    nickname = form['nickname']
     email = form['email']
     password = form['password']
-    player = Player(name, username, email, password)
+    player = Player(name, nickname, email, password)
     database.registration(player)
 
 

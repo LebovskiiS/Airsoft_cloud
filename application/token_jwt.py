@@ -8,5 +8,10 @@ def create_jwt(player_id):
     return token
 
 def decode_jwt(token):
-    data = jwt.decode(token, SECRET_KEY, algorithms= ['HS256'])
-    return data
+    try:
+        if isinstance(token, str):  # Adding this check to convert string token to bytes
+            token = token.encode('utf-8')
+        data = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+        return data
+    except (jwt.ExpiredSignatureError, jwt.InvalidTokenError, jwt.DecodeError) as e:
+        return None

@@ -3,44 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>login</title>
+    <title>Login</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #333;
+            background: #121212;
             color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            margin: 0;
         }
         .form-container {
-            margin-top: 10%;
+            width: 100%;
+            max-width: 400px;
+            margin: 40px 0;
+        }
+        .card {
+            background: #1f1f1f;
+            border: none;
+            border-radius: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        .card-title {
+            margin-bottom: 2rem;
+            font-weight: bold;
+        }
+        .form-control {
+            background: #2c2c2c;
+            border: 1px solid #555;
+            color: #fff;
+            border-radius: 0.5rem;
+        }
+        .btn-primary, .btn-secondary {
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+        }
+        .btn-primary {
+            background-color: #00A8E8;
+            border-color: #00A8E8;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+        .logo {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+        }
+        .logo img {
+            max-width: 100%;
+            height: auto;
         }
     </style>
 </head>
 <body>
     <div class="container form-container">
         <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card bg-dark text-white">
+            <div class="col-md-12">
+                <div class="logo">
+                    <img src="../static/img/vertical-logo.png" alt="Logo">
+                </div>
+                <div class="card">
                     <div class="card-body">
-                        <h3 class="card-title text-center">login</h3>
+                        <h3 class="card-title text-center">Login</h3>
                         <form action="/login/form/submit" method="POST">
                             <div class="form-group">
-                                <label for="email">email</label>
-                                <input name="email" type="email" class="form-control" id="email" placeholder="enter email">
+                                <label for="email">Email</label>
+                                <input name="email" type="email" class="form-control" id="email" placeholder="Enter email">
                             </div>
                             <div class="form-group">
-                                <label for="password">password</label>
-                                <input name="password" type="password" class="form-control" id="password" placeholder="Введите пароль">
+                                <label for="password">Password</label>
+                                <input name="password" type="password" class="form-control" id="password" placeholder="Enter password">
                             </div>
-                            <button type="submit" class="btn btn-primary btn-block">Войти</button>
+                            <button type="submit" class="btn btn-primary btn-block">Login</button>
                         </form>
+                        <div class="text-center mt-3">
+                            <a href="/registration/form" class="btn btn-secondary btn-block">Register</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Bootstrap JS and dependencies -->
+    <!-- Bootstrap JS и зависимости -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

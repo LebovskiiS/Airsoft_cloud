@@ -66,7 +66,7 @@ class Database:
 
 
     def __insert_file(self, entity):
-        self.cursor.execute('INSERT INTO files (player_id, event_id, link) VALUES (?,?, ?) ',
+        self.cursor.execute('INSERT INTO img (player_id, event_id, link) VALUES (?,?, ?) ',
                             [entity.player_id, entity.event_id, entity.link])
         self.connection.commit()
         entity.file_id = self.cursor.lastrowid

@@ -1,12 +1,25 @@
 from flask import render_template, request, redirect, make_response
+from sqlalchemy.dialects.mysql import INTEGER
+
 from .token_jwt import create_jwt
 from confg import SECRET_KEY
 from .controllers import event_submit, player_submit, events, registration_submit, login_form_submit
 import sqlite3
+from .token_jwt import decode_jwt
+
+
+def check_jwt_view():
+     token = request.cookies.get('jwt')
+     decoded_token = decode_jwt(token)
+     if isinstance(decoded_token, dict) and isinstance(decoded_token['id'], int):
+          return render_template('main.html')
+     else:
+          return render_template('login_form.html')
+
 
 
 def main_view():
-     pass
+     return render_template('main.html')
 
 
 def event_form_view():
