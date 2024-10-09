@@ -1,20 +1,17 @@
 from flask import render_template, request, redirect, make_response
-from sqlalchemy.dialects.mysql import INTEGER
-
-from .token_jwt import create_jwt
-from confg import SECRET_KEY
-from .controllers import event_submit, player_submit, events, registration_submit, login_form_submit
+from .token_jwt import decode_jwt
+from .controllers import event_submit, events, registration_submit, login_form_submit
 import sqlite3
 from .token_jwt import decode_jwt
 
 
 def check_jwt_view():
-     token = request.cookies.get('jwt')
+     token = request.cookies.get('cookies')
      decoded_token = decode_jwt(token)
      if isinstance(decoded_token, dict) and isinstance(decoded_token['id'], int):
-          return render_template('main.html')
+          return redirect('/events')
      else:
-          return render_template('login_form.html')
+          return redirect('/login/form')
 
 
 
@@ -22,32 +19,36 @@ def main_view():
      return render_template('main.html')
 
 
+
 def event_form_view():
-     return render_template('form_event.html')
+     if request.cookies.get('cookies'):
+          return render_template('form_event.html')
+     else:
+          e = redirect('/login/form')
+          return e
+
+
 
 
 def event_submit_view():
      event_submit(request.form)
-     return 'ok'
+     return redirect('/events')
 
 
 def player_form_view():
      return render_template('player_info.html')
 
-def player_info_submit_view():
-     player_submit(request.form)
-     return 'ok'
-
 def events_view():
-     data = events()
-     print(data)
-     return render_template('events.html', event_list = data)
-
+     if request.cookies.get('cookies'):
+          data = events()
+          return render_template('events.html', event_list = data)
+     else:
+          e = redirect('/login/form')
+          return e
 
 
 def registration_form_view():
      return render_template('registration.html')
-
 
 
 def registration_submit_view():
@@ -65,6 +66,12 @@ def login_form_view():
 
 def login_form_submit_view():
      token = login_form_submit(request.form)
-     resp = make_response(redirect('/main'))
-     resp.set_cookie(key= 'cookies', value= token, max_age=100*100*100, path= '/', secure=True, httponly=True )
-     return resp
+     if token:
+          resp = redirect('/events')
+          resp.set_cookie(key= 'cookies', value= token, max_age=100*100*100)
+          return resp
+     else:
+          return redirect('/login/form')
+
+def upload_files_view():
+     data = request.files

@@ -1,7 +1,7 @@
 import sqlite3
 import confg
 from .db_scripts import create_table_events, create_table_files, create_table_players
-
+from securiry.password_hash import hashed_function
 
 class Player:
     def __init__(self, name, nickname, email, password, player_id= None):
@@ -47,17 +47,7 @@ class Database:
 
 
 
-
-
-    def __insert_player(self, entity):
-        self.cursor.execute('INSERT INTO players (name, nickname) VALUES (?,?) ', (entity.name, entity.nickname))
-        self.connection.commit()
-        entity.player_id = self.cursor.lastrowid
-        return entity
-
-
-
-    def __insert_event(self, entity):
+    def insert_event(self, entity):
         self.cursor.execute('INSERT INTO events (event_name, date, location) VALUES (?,?,?) ',
                             [entity.event_name, entity.date, entity.location])
         self.connection.commit()
@@ -65,22 +55,6 @@ class Database:
         return entity
 
 
-    def __insert_file(self, entity):
-        self.cursor.execute('INSERT INTO img (player_id, event_id, link) VALUES (?,?, ?) ',
-                            [entity.player_id, entity.event_id, entity.link])
-        self.connection.commit()
-        entity.file_id = self.cursor.lastrowid
-        return entity
-
-    def insert_one(self, entity):
-        if isinstance(entity, Player):
-            return self.__insert_player(entity)
-        elif isinstance(entity, Event):
-            return self.__insert_event(entity)
-        elif isinstance(entity, File):
-            return self.__insert_file(entity)
-        else:
-            raise ValueError('Invalid entity type')
 
 
 
@@ -110,6 +84,8 @@ class Database:
         if player_data is not None:
             player = Player(player_data[1], player_data[2], player_data[3], player_data[4], player_id= player_data[0])
             return player
+
+
 
 
 

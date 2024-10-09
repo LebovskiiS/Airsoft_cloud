@@ -2,9 +2,8 @@ create_table_players = '''
 CREATE TABLE IF NOT EXISTS players (
     ID INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT,
-    nickname TEXT NOT NULL UNIQUE,  email TEXT NOT NULL UNIQUE, password TEXT NOT NULL, cookies TEXT DEFAULT NULL
-)
-'''
+    nickname TEXT NOT NULL UNIQUE,  email TEXT NOT NULL UNIQUE, password TEXT NOT NULL
+)'''
 
 
 create_table_events = '''

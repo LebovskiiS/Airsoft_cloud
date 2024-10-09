@@ -1,20 +1,14 @@
 from database.db import Event, Player
 from . import database
 from .token_jwt import create_jwt
+from securiry.password_hash import hashed_function
 
 def event_submit(data):
     event_name = data['event_name']
     date = data['date']
     location = data['location']
     new_event = Event(event_name, date, location)
-    database.insert_one(new_event)
-
-
-def player_submit(player_info):
-    name = player_info['name']
-    nickname = player_info['nickname']
-    new_player = Player(name, nickname)
-    database.insert_one(Player)
+    database.insert_event(new_event)
 
 
 
@@ -26,16 +20,17 @@ def registration_submit(form):
     name = form['name']
     nickname = form['nickname']
     email = form['email']
-    password = form['password']
+    password = hashed_function.get_hashed_password(form['password']) #pass hashing
     player = Player(name, nickname, email, password)
     database.registration(player)
 
 
 def login_form_submit(form):
-    entity = database.get_player_by_credential(form['email'], form['password'])
+    entity = database.get_player_by_credential(form['email'], hashed_function.get_hashed_password(form['password']))
     if entity:
         token = create_jwt(entity.player_id)
         return token
+
 
 
 
